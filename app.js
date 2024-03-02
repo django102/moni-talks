@@ -40,6 +40,8 @@ db.sequelize
     })
     .catch((err) => LoggerService.error(`Unable to connect to the database: ${err}`));
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     LoggerService.info(`Server is listening on port ${port}`);
 });
+
+module.exports = server;
