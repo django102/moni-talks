@@ -1,0 +1,7 @@
+{
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": "75",
+    "timeout": "9999999",
+    "color": true
+}
