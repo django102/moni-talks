@@ -10,3 +10,4 @@ require('./unit/controllers/UserController.test');
 // Services
 require('./unit/services/ResponseService.test');
 require('./unit/services/LoggerService.test');
+require('./unit/services/UtilityService.test');
