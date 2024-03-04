@@ -1,4 +1,4 @@
-const { should } = require("should");
+const should = require("should");
 
 describe('Health Test', () => {
     it('should test', () => {

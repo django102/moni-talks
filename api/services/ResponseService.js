@@ -11,7 +11,7 @@ module.exports = {
         }
 
         if (typeof data !== 'undefined') {
-            response.data = res.formatResponse ? res.formatResponse(data) : data;
+            response.data = data;
         }
 
         if (typeof meta !== 'undefined') {
