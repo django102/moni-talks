@@ -11,3 +11,5 @@ require('./unit/controllers/UserController.test');
 require('./unit/services/ResponseService.test');
 require('./unit/services/LoggerService.test');
 require('./unit/services/UtilityService.test');
+require('./unit/services/WalletService.test');
+require('./unit/services/UserService.test');

@@ -1,8 +1,10 @@
 const dbModels = require('../data').sequelize.models;
 
-const User = dbModels.User;
+const User = dbModels.user;
+const Wallet = dbModels.wallet;
 
 
 module.exports = {
-    User
+    User,
+    Wallet
 };

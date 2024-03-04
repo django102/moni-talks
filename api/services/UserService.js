@@ -4,7 +4,7 @@ const WalletService = require('./WalletService');
 
 const UserService = {
     create: async (user) => {
-        const existingUser = await this.fetchByEmail(user.email);
+        const existingUser = await UserService.fetchByEmail(user.email);
         if (existingUser) {
             return existingUser;
         }
@@ -23,7 +23,7 @@ const UserService = {
     },
 
     update: async (user) => {
-        const existingUser = await this.fetchByEmail(user.email);
+        const existingUser = await UserService.fetchByEmail(user.email);
         if (!existingUser) {
             throw new Error('User not found');
         }
@@ -33,7 +33,7 @@ const UserService = {
         }
 
         try {
-            const updatedUser = await User.update(user, { where: { email } });
+            const updatedUser = await User.update(user, { where: { email:user.email } });
             delete updatedUser.password;
             return updatedUser;
         } catch (err) {
@@ -42,13 +42,13 @@ const UserService = {
         }
     },
 
-    fetch: async (userId) => {
+    fetch: async (userId, withPassword = false) => {
         const user = await User.findOne({ where: { id: userId } });
         if (!user) {
             return null;
         }
 
-        const thisUser = { ...user.toJSON() };
+        const thisUser = { ...user };
 
         if (!withPassword) {
             delete thisUser.password;
@@ -59,12 +59,11 @@ const UserService = {
 
     fetchByEmail: async (email, withPassword = false) => {
         const user = await User.findOne({ where: { email } });
-
         if (!user) {
             return null;
         }
 
-        const thisUser = { ...user.toJSON() };
+        const thisUser = { ...user };
 
         if (!withPassword) {
             delete thisUser.password;
@@ -74,7 +73,7 @@ const UserService = {
     },
 
     createWallet: async (userId) => {
-        const user = await this.fetch(userId);
+        const user = await UserService.fetch(userId);
         if (!user) {
             throw new Error("User not found");
         }

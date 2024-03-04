@@ -3,12 +3,12 @@ const UtilityService = require('./UtilityService');
 
 const WalletService = {
     create: async (userId) => {
-        const existingActiveWallet = await this.fetch(userId);
+        const existingActiveWallet = await WalletService.fetch(userId);
         if (existingActiveWallet) {
             throw new Error('An active wallet already exists');
         }
 
-        const accoutNumber = await this.generateWalletAccountNumber();
+        const accoutNumber = await WalletService.generateWalletAccountNumber();
 
         // ***************************************************************************
         // ASSUMPTION: Moni is not a traditional bank/MFB that can receive funds
@@ -35,22 +35,23 @@ const WalletService = {
             return null;
         }
 
-        return wallet.toJSON();
+        return wallet;
     },
 
     generateWalletAccountNumber: async () => {
         const generatedAccountNumber = UtilityService.generateRandomNumber();
-        const walletExists = await this.checkIfWalletAccountNumberExists(generatedAccountNumber);
+        const walletExists = await WalletService.checkIfWalletAccountNumberExists(generatedAccountNumber);
         if (walletExists) {
-            await this.generateWalletAccountNumber();
+            await WalletService.generateWalletAccountNumber();
         }
 
         return generatedAccountNumber;
     },
 
     checkIfWalletAccountNumberExists: async (accountNumber) => {
-        const wallet = await Wallet.findOne({ where: { accountNumber } })
-        return wallet;
+        const wallet = await Wallet.findOne({ where: { accountNumber } });
+        if(!wallet) return false
+        return true;
     }
 };
 
