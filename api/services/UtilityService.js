@@ -32,12 +32,6 @@ const UtilityService = {
 
       return chance.string({ length, casing, alpha: true, numeric: true });
    },
-   // generateCode: (length = 12) => {
-   //    return chance.string({ length, casing: 'lower', alpha: true, numeric: true });
-   // },
-   // generateOtp: (length = 6) => {
-   //    return chance.string({ length, casing: 'lower', alpha: false, numeric: true });
-   // },
 };
 
 module.exports = UtilityService;

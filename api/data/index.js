@@ -22,7 +22,8 @@ const sequelize = new Sequelize({
 
 const models = {
     user: require('./User')(sequelize),
-    wallet: require('./Wallet')(sequelize)
+    wallet: require('./Wallet')(sequelize),
+    card: require('./Card')(sequelize)
 };
 
 module.exports = {

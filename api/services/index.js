@@ -4,6 +4,8 @@ const ResponseService = require('./ResponseService');
 const UserService = require('./UserService');
 const UtilityService = require('./UtilityService');
 const WalletService = require('./WalletService');
+const CardService = require('./CardService');
+const CryptoService = require('./CryptoService');
 
 
 module.exports = {
@@ -13,4 +15,6 @@ module.exports = {
     UtilityService,
     UserService,
     WalletService,
+    CardService,
+    CryptoService
 }
