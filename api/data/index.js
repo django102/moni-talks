@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const {ConfigService, LoggerService} = require('../services');
+const ConfigService = require('../services/ConfigService');
+const LoggerService = require('../services/LoggerService');
 
 const { settings } = ConfigService;
 const sequelize = new Sequelize({

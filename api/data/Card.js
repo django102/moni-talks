@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true
         },
-        brand:{
+        brand: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -32,16 +32,16 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        expMonth:{
-            type: DataTypes.NUMBER,
+        expMonth: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        expYear:{
-            type: DataTypes.NUMBER,
+        expYear: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        cvv:{
-            type: DataTypes.NUMBER,
+        cvv: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         maskedPan: {
