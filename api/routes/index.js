@@ -3,7 +3,6 @@ const router = express.Router();
 
 const rateLimit = require('../middlewares/RateLimiter');
 
-
 const { UserController, PaymentController } = require("../controllers");
 const { validateAuthorization } = require('../services/AuthService');
 

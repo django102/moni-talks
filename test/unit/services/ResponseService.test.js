@@ -1,6 +1,5 @@
 const assert = require('assert');
-const should = require('should');
-const sinon = require('sinon'); // For mocking res object methods
+const sinon = require('sinon');
 
 const { json, nojson } = require('../../../api/services/ResponseService');
 

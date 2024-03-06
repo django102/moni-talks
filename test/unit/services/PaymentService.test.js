@@ -8,7 +8,6 @@ const {
     WalletService,
     UtilityService
 } = require('../../../api/services');
-const { TransactionStatus } = require('../../../api/enums');
 
 describe('PaymentService', () => {
     describe('processCardPayment', () => {

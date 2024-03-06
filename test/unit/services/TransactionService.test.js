@@ -1,7 +1,6 @@
 const assert = require('assert');
-const moment = require('moment');
 const sinon = require('sinon');
-const { UtilityService, TransactionService, LoggerService } = require('../../../api/services');
+const {  TransactionService, LoggerService } = require('../../../api/services');
 const { Transaction, Ledger } = require('../../../api/models');
 const { TransactionStatus } = require('../../../api/enums');
 const { sequelize } = require('../../../api/data');

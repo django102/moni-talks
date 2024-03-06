@@ -1,6 +1,5 @@
 const assert = require('assert');
 const sinon = require('sinon');
-const crypto = require('crypto');
 const CryptoService = require('../../../api/services/CryptoService');
 const LoggerService = require('../../../api/services/LoggerService');
 

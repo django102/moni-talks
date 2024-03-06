@@ -3,7 +3,6 @@ const sinon = require('sinon');
 const { Card } = require('../../../api/models');
 const CryptoService = require('../../../api/services/CryptoService');
 const LoggerService = require('../../../api/services/LoggerService');
-const MaskData = require('maskdata');
 const { default: CreditCardGenerator } = require("@mihnea.dev/credit-card-generator");
 const CardService = require('../../../api/services/CardService');
 
