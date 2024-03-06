@@ -8,6 +8,13 @@ const { sequelize } = require('../../../api/data');
 
 
 describe('TransactionService', () => {
+    before(() => {
+        sinon.stub(LoggerService, 'trace');
+    });
+    after(() => {
+        sinon.restore();
+    });
+    
     describe('generateTransactionReference', () => {
         it('should generate a valid transaction reference with correct length', () => {
             const generatedReference = TransactionService.generateTransactionReference();

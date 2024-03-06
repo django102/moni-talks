@@ -4,8 +4,16 @@ const { User } = require('../../../api/models');
 const LoggerService = require('../../../api/services/LoggerService');
 const WalletService = require('../../../api/services/WalletService');
 const UserService = require('../../../api/services/UserService');
+const AuthService = require('../../../api/services/AuthService');
 
 describe('UserService', () => {
+    before(() => {
+        sinon.stub(LoggerService, 'trace');
+    });
+    after(() => {
+        sinon.restore();
+    });
+
     describe('create', () => {
         afterEach(() => {
             sinon.restore();
@@ -61,7 +69,7 @@ describe('UserService', () => {
         });
 
         it('should update user information and remove password from the response', async () => {
-            const userData = { email: 'test@example.com', name: 'Test User', password:'myPassword' };
+            const userData = { email: 'test@example.com', name: 'Test User', password: 'myPassword' };
             sinon.stub(UserService, 'fetchByEmail').resolves(userData);
             sinon.stub(User, 'update').resolves(userData);
 
@@ -214,6 +222,120 @@ describe('UserService', () => {
             }, { message: 'Could not create wallet at the moment' });
 
             sinon.restore();
+        });
+    });
+
+    describe('authenticate', () => {
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('should authenticate a user with valid email and password', async () => {
+            // Mocking UserService.fetchByEmail to return a mock user
+            const mockUser = { id: 1, email: 'test@example.com', password: 'hashed_password', otherData: 'mock_data' };
+            const fetchByEmailStub = sinon.stub(UserService, 'fetchByEmail').resolves(mockUser);
+
+            // Mocking User.generateHash to return the hashed password
+            const generateHashStub = sinon.stub(User, 'generateHash').returns(mockUser.password);
+
+            // Mocking AuthService.issueToken to return a mock token
+            const mockToken = 'mock_token';
+            const issueTokenStub = sinon.stub(AuthService, 'issueToken').returns(mockToken);
+
+            // Test data
+            const email = 'test@example.com';
+            const password = 'password';
+
+            const result = await UserService.authenticate(email, password);
+
+            // Asserting UserService.fetchByEmail function call
+            sinon.assert.calledOnceWithExactly(fetchByEmailStub, email);
+
+            // Asserting User.generateHash function call
+            sinon.assert.calledOnceWithExactly(generateHashStub, password);
+
+            // Asserting AuthService.issueToken function call
+            sinon.assert.calledOnceWithExactly(issueTokenStub, { id: mockUser.id, email: mockUser.email, otherData: 'mock_data' });
+
+            // Asserting the result
+            assert.deepStrictEqual(result, { ...mockUser, token: mockToken });
+
+            // Ensure password field is deleted
+            assert.strictEqual(result.password, undefined);
+        });
+
+        it('should throw an error if user does not exist', async () => {
+            // Mocking UserService.fetchByEmail to return null
+            const fetchByEmailStub = sinon.stub(UserService, 'fetchByEmail').resolves(null);
+
+            // Test data
+            const email = 'nonexistent@example.com';
+            const password = 'password';
+
+            await assert.rejects(async () => {
+                await UserService.authenticate(email, password);
+            }, {
+                message: 'Invalid email or password'
+            });
+
+            // Asserting UserService.fetchByEmail function call
+            sinon.assert.calledOnceWithExactly(fetchByEmailStub, email);
+        });
+
+        it('should throw an error if password is incorrect', async () => {
+            // Mocking UserService.fetchByEmail to return a mock user
+            const mockUser = { id: 1, email: 'test@example.com', password: 'hashed_password', otherData: 'mock_data' };
+            const fetchByEmailStub = sinon.stub(UserService, 'fetchByEmail').resolves(mockUser);
+
+            // Mocking User.generateHash to return a different hashed password
+            const generateHashStub = sinon.stub(User, 'generateHash').returns('different_hashed_password');
+
+            // Test data
+            const email = 'test@example.com';
+            const password = 'incorrect_password';
+
+            await assert.rejects(async () => {
+                await UserService.authenticate(email, password);
+            }, {
+                message: 'Invalid email or password'
+            });
+
+            // Asserting UserService.fetchByEmail function call
+            sinon.assert.calledOnceWithExactly(fetchByEmailStub, email);
+
+            // Asserting User.generateHash function call
+            sinon.assert.calledOnceWithExactly(generateHashStub, password);
+        });
+
+        it('should throw an error if token generation fails', async () => {
+            // Mocking UserService.fetchByEmail to return a mock user
+            const mockUser = { id: 1, email: 'test@example.com', password: 'hashed_password', otherData: 'mock_data' };
+            const fetchByEmailStub = sinon.stub(UserService, 'fetchByEmail').resolves(mockUser);
+
+            // Mocking User.generateHash to return the hashed password
+            const generateHashStub = sinon.stub(User, 'generateHash').returns(mockUser.password);
+
+            // Mocking AuthService.issueToken to return null
+            const issueTokenStub = sinon.stub(AuthService, 'issueToken').returns(null);
+
+            // Test data
+            const email = 'test@example.com';
+            const password = 'password';
+
+            await assert.rejects(async () => {
+                await UserService.authenticate(email, password);
+            }, {
+                message: 'Could not authenticate account'
+            });
+
+            // Asserting UserService.fetchByEmail function call
+            sinon.assert.calledOnceWithExactly(fetchByEmailStub, email);
+
+            // Asserting User.generateHash function call
+            sinon.assert.calledOnceWithExactly(generateHashStub, password);
+
+            // Asserting AuthService.issueToken function call
+            sinon.assert.calledOnceWithExactly(issueTokenStub, { id: mockUser.id, email: mockUser.email, otherData: 'mock_data' });
         });
     });
 });

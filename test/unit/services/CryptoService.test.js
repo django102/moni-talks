@@ -45,8 +45,6 @@ describe('CryptoService', () => {
             const input = { iv: '1234567890', encryptedData: 'abcdef1234567890' };
             const decryptedData = CryptoService.decrypt(input);
 
-            console.log("decryptedData", decryptedData);
-
             assert.strictEqual(decryptedData, '');
 
             sinon.restore();

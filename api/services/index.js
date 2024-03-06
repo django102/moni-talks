@@ -10,6 +10,7 @@ const LedgerService = require('./LedgerService');
 const TransactionService = require('./TransactionService');
 const PaymentService = require('./PaymentService');
 const AuthService = require('./AuthService');
+const JoiService = require('./JoiService');
 
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     CardService,
     ConfigService,
     CryptoService,
-    
+    JoiService,
     LedgerService,
     LoggerService,
     PaymentService,

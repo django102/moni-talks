@@ -5,6 +5,7 @@ require('./unit/Health.test');
 
 // Controllers
 require('./unit/controllers/UserController.test');
+require('./unit/controllers/PaymentController.test');
 
 
 // Services
@@ -19,3 +20,4 @@ require('./unit/services/LedgerService.test');
 require('./unit/services/PaymentService.test');
 require('./unit/services/TransactionService.test');
 require('./unit/services/AuthService.test');
+require('./unit/services/JoiService.test');

@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const LoggerService = require('./LoggerService');
 const WalletService = require('./WalletService');
+const AuthService = require('./AuthService');
 
 const UserService = {
     create: async (user) => {
@@ -22,6 +23,31 @@ const UserService = {
         }
     },
 
+    authenticate: async (email, password) => {
+        const existingUser = await UserService.fetchByEmail(email);
+        if (!existingUser) {
+            LoggerService.trace('User not found');
+            throw new Error('Invalid email or password');
+        }
+
+        const hashedPassword = User.generateHash(password);
+        const userPassword = existingUser.password;
+
+        if (hashedPassword !== userPassword) {
+            LoggerService.trace('Incorrect password');
+            throw new Error('Invalid email or password');
+        }
+
+        delete existingUser.password;
+
+        const userToken = AuthService.issueToken(existingUser);
+        if (!userToken) {
+            throw new Error('Could not authenticate account')
+        }
+
+        return { ...existingUser, token: userToken };
+    },
+
     update: async (user) => {
         const existingUser = await UserService.fetchByEmail(user.email);
         if (!existingUser) {
@@ -33,7 +59,7 @@ const UserService = {
         }
 
         try {
-            const updatedUser = await User.update(user, { where: { email:user.email } });
+            const updatedUser = await User.update(user, { where: { email: user.email } });
             delete updatedUser.password;
             return updatedUser;
         } catch (err) {

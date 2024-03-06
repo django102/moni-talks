@@ -79,6 +79,16 @@ const CardService = {
         }
 
         const cards = await Card.findAll({ where: { userId } });
+
+        cards.forEach(card => {
+            delete card.fingerprint;
+            delete card.key;
+            delete card.userId;
+            delete card.first6;
+            delete card.last4;
+            delete card.cvv;
+        });
+
         return cards;
     },
 
