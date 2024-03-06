@@ -1,6 +1,6 @@
 # moni-talks
 
-# Environment Variables Required to bootstrap this project
+### Environment Variables Required to bootstrap this project
 | Key | Environment Variable | Default |
 | ------------- | -------- | ------ |
 | NODE_ENV | NODE_ENV | local |
