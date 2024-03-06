@@ -34,7 +34,6 @@ db.sequelize
     .authenticate()
     .then(() => {
         LoggerService.trace('Connected to the database.');
-        db.sequelize.sync();
     })
     .then(() => {
         LoggerService.info(`Application is running...`);

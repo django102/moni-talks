@@ -7,7 +7,13 @@
     "dev-start": "nodemon --signal SIGINT --inspect=0.0.0.0:5858 app.js",
     "start": "node app.js",
     "test": "nyc --reporter=html --reporter=text mocha --config=test/.mocharc.json --no-dependencies './test/index.js'",
-    "test-no-coverage": "mocha --config=test/.mocharc.json --no-dependencies './test/index.js'"
+    "test-no-coverage": "mocha --config=test/.mocharc.json --no-dependencies './test/index.js'",
+    "migrate": "npx db-migrate up -e prod",
+    "migrate-dry-run": "npx db-migrate up -e prod --dry-run",
+    "rollback": "npx db-migrate down -e prod",
+    "rollback-dry-run": "npx db-migrate down -e prod --dry-run",
+    "create-migration": "npx db-migrate create $npm_config_name -e prod --sql-file",
+    "validate-migration": "node lib/mysql/validate.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +40,8 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "db-migrate": "^0.11.14",
+    "db-migrate-mysql": "^2.3.2",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "express-pino-logger": "^7.0.0",
