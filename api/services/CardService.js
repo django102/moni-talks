@@ -104,7 +104,7 @@ const CardService = {
         return returnCard;
     },
 
-    verifyCardInformation: async (pan, expiryMonth, expiryYear, cvv2) => {
+    verifyCardInformation: async ({ pan, expiryMonth, expiryYear, cvv2 }) => {
         const encryptedCardInformation = CryptoService.encrypt(pan);
         const { iv, encryptedData } = encryptedCardInformation;
 
@@ -118,7 +118,7 @@ const CardService = {
             throw new Error('Invalid Card Details');
         }
 
-        return;
+        return cardInformation;
     },
 
     generateCardInformation: () => {
@@ -136,6 +136,5 @@ const CardService = {
         return maskedNumber;
     }
 }
-
 
 module.exports = CardService;

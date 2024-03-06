@@ -169,7 +169,7 @@ describe('CardService', () => {
             sinon.stub(CryptoService, 'encrypt').returns(encryptedData);
             sinon.stub(Card, 'findOne').resolves(mockCard);
 
-            await CardService.verifyCardInformation(pan, expiryMonth, expiryYear, cvv2);
+            await CardService.verifyCardInformation({pan, expiryMonth, expiryYear, cvv2});
 
             sinon.restore();
         });
@@ -186,7 +186,7 @@ describe('CardService', () => {
             sinon.stub(Card, 'findOne').resolves(mockCard);
 
             await assert.rejects(async () => {
-                await CardService.verifyCardInformation(pan, expiryMonth, expiryYear, cvv2);
+                await CardService.verifyCardInformation({pan, expiryMonth, expiryYear, cvv2});
             }, { message: 'Invalid Card Details' });
 
             sinon.restore();
@@ -203,7 +203,7 @@ describe('CardService', () => {
             sinon.stub(Card, 'findOne').resolves(null);
 
             await assert.rejects(async () => {
-                await CardService.verifyCardInformation(pan, expiryMonth, expiryYear, cvv2);
+                await CardService.verifyCardInformation({pan, expiryMonth, expiryYear, cvv2});
             }, { message: 'Invalid Card Details' });
 
             sinon.restore();

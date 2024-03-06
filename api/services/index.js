@@ -6,15 +6,23 @@ const UtilityService = require('./UtilityService');
 const WalletService = require('./WalletService');
 const CardService = require('./CardService');
 const CryptoService = require('./CryptoService');
+const LedgerService = require('./LedgerService');
+const TransactionService = require('./TransactionService');
+const PaymentService = require('./PaymentService');
 
 
 module.exports = {
-    ConfigService,
-    LoggerService,
-    ResponseService,
-    UtilityService,
-    UserService,
-    WalletService,
+
     CardService,
-    CryptoService
+    ConfigService,
+    CryptoService,
+    
+    LedgerService,
+    LoggerService,
+    PaymentService,
+    ResponseService,
+    TransactionService,
+    UserService,
+    UtilityService,
+    WalletService,
 }

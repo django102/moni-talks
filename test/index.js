@@ -15,4 +15,6 @@ require('./unit/services/ResponseService.test');
 require('./unit/services/UserService.test');
 require('./unit/services/UtilityService.test');
 require('./unit/services/WalletService.test');
-
+require('./unit/services/LedgerService.test');
+require('./unit/services/PaymentService.test');
+require('./unit/services/TransactionService.test');
