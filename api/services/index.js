@@ -9,10 +9,11 @@ const CryptoService = require('./CryptoService');
 const LedgerService = require('./LedgerService');
 const TransactionService = require('./TransactionService');
 const PaymentService = require('./PaymentService');
+const AuthService = require('./AuthService');
 
 
 module.exports = {
-
+    AuthService,
     CardService,
     ConfigService,
     CryptoService,
